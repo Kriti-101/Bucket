@@ -1,14 +1,20 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route("/", methods=["GET", "POST"])
 def home():
-    return render_template('index.html')
+    name = None
+    if request.method == "POST":
+        name = request.form.get("name")
+        print(name)
+        return render_template('horseshit.html', name = name)
+    return render_template("index.html")
 
 @app.route('/dharshini')
 def greet():
-    return render_template('horseshit.html')
+    name = request.args.get('name')
+    return render_template('horseshit.html', name = name)
 
 if __name__ == "__main__":
     app.run(debug=True)
